@@ -1,0 +1,35 @@
+sap-monitor/
+├── go.mod
+├── go.sum
+├── main.go
+├── config/
+│   ├── config.go
+│   └── loader.go
+├── collectors/
+│   ├── base.go
+│   ├── instance.go
+│   ├── dispatcher.go
+│   ├── enqueue.go
+│   └── process.go
+├── metrics/
+│   ├── definitions.go
+│   └── registry.go
+├── soap/
+│   ├── client.go
+│   ├── structures.go
+│   └── endpoints.go
+├── cache/
+│   ├── manager.go
+│   └── types.go
+├── api/
+│   ├── handlers.go
+│   ├── middleware.go
+│   └── routes.go
+├── utils/
+│   ├── logger.go
+│   ├── errors.go
+│   └── helpers.go
+└── scrape/
+    ├── manager.go
+    └── scheduler.go
+    
