@@ -165,7 +165,7 @@ func NewRegistry() *Registry {
 			[]string{"operation", "instance"},
 		),
 
-		InstancesDiscovered: promauto.NewGauge(
+		InstancesDiscovered: &promauto.NewGauge(
 			prometheus.GaugeOpts{
 				Name: "sap_instances_discovered",
 				Help: "Number of SAP instances discovered",

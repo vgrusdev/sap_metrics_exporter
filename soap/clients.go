@@ -2,6 +2,7 @@ package soap
 
 import (
 	"context"
+	"crypto/tls"
 	"fmt"
 	"net/http"
 	"time"
@@ -31,12 +32,23 @@ func NewClient(cfg *config.Config) *Client {
 }
 
 func (c *Client) CreateSOAPClient(endpoint string) *soap.Client {
-	client := soap.NewClient(endpoint)
+
+	config := c.config
+	opts := []soap.Option{}
 
 	// Add authentication if configured
-	if c.config.Auth != nil && c.config.Auth.Username != "" {
-		client.AddHeader(soap.NewWSSecurityHeader(c.config.Auth.Username, c.config.Auth.Password))
+	if config.Auth != nil && config.Auth.Username != "" {
+		opts = []soap.Option{
+			soap.WithBasicAuth(
+				config.Auth.Username,
+				config.Auth.Password,
+			),
+		}
 	}
+	if config.Auth.UseSSL {
+		opts = append(opts, soap.WithTLS(&tls.Config{InsecureSkipVerify: config.Auth.TLSSkipVfy}))
+	}
+	client := soap.NewClient(endpoint, opts...)
 
 	return client
 }
@@ -59,16 +71,13 @@ func (c *Client) GetSystemInstanceList(ctx context.Context, host, port string) (
 			lastErr = err
 			continue
 		}
-
 		if len(response.Instance) == 0 {
 			lastErr = fmt.Errorf("no instances found at %s", endpoint)
 			continue
 		}
-
 		return response, nil
 	}
-
-	return nil, fmt.Errorf("failed to get instances from any endpoint: %v", lastErr)
+	return nil, fmt.Errorf("SOAP.Client.GetSystemInstanceList: failed to get instances from any endpoint: %v", lastErr)
 }
 
 func (c *Client) GetWPTable(ctx context.Context, host, port string) (*WPTable, error) {
@@ -81,7 +90,6 @@ func (c *Client) GetWPTable(ctx context.Context, host, port string) (*WPTable, e
 	if err := client.CallContext(ctx, "GetWPTable", request, response); err != nil {
 		return nil, fmt.Errorf("GetWPTable failed: %w", err)
 	}
-
 	return response, nil
 }
 
@@ -95,7 +103,6 @@ func (c *Client) GetQueueStatistic(ctx context.Context, host, port string) (*Que
 	if err := client.CallContext(ctx, "GetQueueStatistic", request, response); err != nil {
 		return nil, fmt.Errorf("GetQueueStatistic failed: %w", err)
 	}
-
 	return response, nil
 }
 
@@ -109,6 +116,5 @@ func (c *Client) GetEnqTable(ctx context.Context, host, port string) (*EnqTable,
 	if err := client.CallContext(ctx, "GetEnqTable", request, response); err != nil {
 		return nil, fmt.Errorf("GetEnqTable failed: %w", err)
 	}
-
 	return response, nil
 }
