@@ -65,6 +65,8 @@ func Load(configFile string) (*Config, error) {
 	if *logLevel != "" {
 		cfg.LogLevel = *logLevel
 	}
-
+	if !cfg.Auth.UseSSL && cfg.Auth.TLSSkipVfy {
+		cfg.Auth.TLSSkipVfy = false
+	}
 	return cfg, nil
 }

@@ -21,9 +21,10 @@ type Config struct {
 }
 
 type AuthConfig struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-	UseSSL   bool   `json:"use_ssl"`
+	Username   string `json:"username"`
+	Password   string `json:"password"`
+	UseSSL     bool   `json:"use_ssl"`
+	TLSSkipVfy bool   `json:"tls_skip_verify"`
 }
 
 type APIAuthConfig struct {
@@ -44,7 +45,11 @@ func DefaultConfig() *Config {
 		CacheTTL:        5 * time.Minute,
 		MaxConcurrency:  5,
 		LogLevel:        "info",
-		RequestTimeout:  30 * time.Second,
+		Auth: &AuthConfig{
+			UseSSL:     true,
+			TLSSkipVfy: false,
+		},
+		RequestTimeout: 30 * time.Second,
 		API: &APIAuthConfig{
 			Enabled: false,
 		},
