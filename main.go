@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"runtime"
 	"syscall"
 	"time"
 
@@ -19,8 +20,8 @@ import (
 )
 
 var (
-	version   = "1.0.0"
-	buildTime = ""
+	version          = "0.1.0-development"
+	buildDate string = "December 2025"
 )
 
 func main() {
@@ -30,23 +31,20 @@ func main() {
 	flag.Parse()
 
 	if *versionFlag {
-		fmt.Printf("SAP Monitor Exporter v%s\n", version)
-		if buildTime != "" {
-			fmt.Printf("Build time: %s\n", buildTime)
-		}
-		os.Exit(0)
+		showVersion()
 	}
 
 	// Initialize logger
 	logger := utils.NewLogger("main")
 
 	// Load configuration
-	cfg, err := config.Load(*configFile)
+	//cfg, err := config.Load(*configFile)
+	cfg, err := config.LoadConfig(*configFile)
 	if err != nil {
 		logger.Fatal("Failed to load configuration", "error", err)
 	}
 
-	logger.Info("Starting SAP Monitor Exporter",
+	logger.Info("Starting SAP Metrics Exporter",
 		"version", version,
 		"primary_instance", cfg.PrimaryInstance,
 		"host", cfg.Host,
@@ -104,4 +102,8 @@ func waitForShutdown(logger *utils.Logger, server *api.Server, scrapeMgr *scrape
 	scrapeMgr.Stop()
 
 	logger.Info("Shutdown completed")
+}
+func showVersion() {
+	fmt.Printf("SAP_Metrics_Exporter, %s version\nbuilt with %s %s/%s %s\n", version, runtime.Version(), runtime.GOOS, runtime.GOARCH, buildDate)
+	os.Exit(0)
 }
