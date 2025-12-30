@@ -44,6 +44,7 @@ func main() {
 		logger.Fatal("Failed to load configuration", "error", err)
 	}
 
+	logger.Debug("Config %s", cfg)
 	logger.Info("Starting SAP Metrics Exporter",
 		"version", version,
 		"primary_instance", cfg.PrimaryInstance,
