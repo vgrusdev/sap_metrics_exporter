@@ -10,8 +10,8 @@ type Config struct {
 	PrimaryInstance  string         `json:"primary_instance"`
 	Host             string         `json:"host"`
 	Port             string         `json:"port"`
-	SAPControlURL    string         `json:"sap-control-url"`
-	SAPControlDomain string         `json:"sap-control-domain,omitempty"`
+	SAPControlURL    string         `json:"sap_control_url"`
+	SAPControlDomain string         `json:"sap_control_domain"`
 	ListenAddress    string         `json:"listen_address"`
 	ScrapeInterval   time.Duration  `json:"scrape_interval"`
 	Timeout          time.Duration  `json:"scrape_timeout"`
