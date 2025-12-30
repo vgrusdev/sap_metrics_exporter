@@ -122,5 +122,6 @@ func LoadConfig(configPath string) (*Config, error) {
 		return nil, fmt.Errorf("unable to decode config into struct: %w", err)
 	}
 
+	log.Debug("config: %s", config)
 	return &config, nil
 }
