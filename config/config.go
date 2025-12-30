@@ -63,7 +63,7 @@ func DefaultConfig() *Config {
 func setDefaults(v *viper.Viper) {
 	v.SetDefault("primary_instance", "")
 	v.SetDefault("host", "localhost")
-	v.SetDefault("port", "8080")
+	v.SetDefault("port", "50014")
 	v.SetDefault("sap_control_url", "https://localhost:50014")
 	v.SetDefault("sap_control_domain", "")
 	v.SetDefault("listen_address", ":8080")

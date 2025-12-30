@@ -5,7 +5,6 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"strings"
 	"time"
 
 	"github.com/spf13/viper"
@@ -25,7 +24,7 @@ var (
 	logLevel       = flag.String("log-level", "info", "Log level (debug, info, warn, error)")
 )
 
-func Load(configFile string) (*Config, error) {
+func Load1(configFile string) (*Config, error) {
 	cfg := DefaultConfig()
 
 	// Load from file if specified
@@ -111,11 +110,11 @@ func LoadConfig(configPath string) (*Config, error) {
 	}
 
 	// Enable environment variable support
-	v.AutomaticEnv()
-	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+	//v.AutomaticEnv()
+	//v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 
 	// Bind environment variables
-	bindEnvVars(v)
+	//bindEnvVars(v)
 
 	// Unmarshal into struct
 	if err := v.Unmarshal(&config); err != nil {
