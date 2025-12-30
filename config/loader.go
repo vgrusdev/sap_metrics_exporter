@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/spf13/viper"
@@ -110,11 +111,11 @@ func LoadConfig(configPath string) (*Config, error) {
 	}
 
 	// Enable environment variable support
-	//v.AutomaticEnv()
-	//v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+	v.AutomaticEnv()
+	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 
 	// Bind environment variables
-	//bindEnvVars(v)
+	bindEnvVars(v)
 
 	// Unmarshal into struct
 	if err := v.Unmarshal(&config); err != nil {

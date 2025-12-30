@@ -7,34 +7,34 @@ import (
 )
 
 type Config struct {
-	PrimaryInstance  string         `json:"primary_instance"`
-	Host             string         `json:"host"`
-	Port             string         `json:"port"`
-	SAPControlURL    string         `json:"sap_control_url"`
-	SAPControlDomain string         `json:"sap_control_domain"`
-	ListenAddress    string         `json:"listen_address"`
-	ScrapeInterval   time.Duration  `json:"scrape_interval"`
-	Timeout          time.Duration  `json:"scrape_timeout"`
-	DetailedMetrics  bool           `json:"detailed_metrics"`
-	CacheTTL         time.Duration  `json:"cache_ttl"`
-	MaxConcurrency   int            `json:"max_concurrency"`
-	LogLevel         string         `json:"log_level"`
-	Auth             *AuthConfig    `json:"sap_auth,omitempty"`
-	RequestTimeout   time.Duration  `json:"api_request_timeout"` // HTTP request timeout
-	API              *APIAuthConfig `json:"api_auth,omitempty"`  // API Authentication
+	PrimaryInstance  string         `mapstructure:"primary_instance" json:"primary_instance"`
+	Host             string         `mapstructure:"host" json:"host"`
+	Port             string         `mapstructure:"port" json:"port"`
+	SAPControlURL    string         `mapstructure:"sap_control_url" json:"sap_control_url"`
+	SAPControlDomain string         `mapstructure:"sap_control_domain" json:"sap_control_domain"`
+	ListenAddress    string         `mapstructure:"listen_address" json:"listen_address"`
+	ScrapeInterval   time.Duration  `mapstructure:"scrape_interval" json:"scrape_interval"`
+	Timeout          time.Duration  `mapstructure:"scrape_timeout" json:"scrape_timeout"`
+	DetailedMetrics  bool           `mapstructure:"detailed_metrics" json:"detailed_metrics"`
+	CacheTTL         time.Duration  `mapstructure:"cache_ttl" json:"cache_ttl"`
+	MaxConcurrency   int            `mapstructure:"max_concurrency" json:"max_concurrency"`
+	LogLevel         string         `mapstructure:"log_level" json:"log_level"`
+	Auth             *AuthConfig    `mapstructure:"sap_auth" json:"sap_auth,omitempty"`
+	RequestTimeout   time.Duration  `mapstructure:"api_request_timeout" json:"api_request_timeout"` // HTTP request timeout
+	API              *APIAuthConfig `mapstructure:"api_auth" json:"api_auth,omitempty"`             // API Authentication
 }
 
 type AuthConfig struct {
-	Username   string `json:"username"`
-	Password   string `json:"password"`
-	UseSSL     bool   `json:"use_ssl"`
-	TLSSkipVfy bool   `json:"tls_skip_verify"`
+	Username   string `mapstructure:"username" json:"username"`
+	Password   string `mapstructure:"password" json:"password"`
+	UseSSL     bool   `mapstructure:"use_ssl" json:"use_ssl"`
+	TLSSkipVfy bool   `mapstructure:"tls_skip_verify" json:"tls_skip_verify"`
 }
 
 type APIAuthConfig struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Enabled  bool   `json:"enabled"`
+	Username string `mapstructure:"username" json:"username"`
+	Password string `mapstructure:"password" json:"password"`
+	Enabled  bool   `mapstructure:"enabled" json:"enabled"`
 }
 
 func DefaultConfig() *Config {
